@@ -93,7 +93,7 @@ document.addEventListener('click',function(e){
   var c=e.target.closest('.chip'); if(c){var k=c.dataset.k,v=c.dataset.v; if(k==='ch')v=Number(v); st[k]=(st[k]===v)?null:v; sync(); render(); return}
   var s=e.target.closest('.star'); if(s){var id=s.dataset.id; if(stars[id])delete stars[id]; else stars[id]=1; store.set('cbt_stars',stars); render(true); return}
   var tg=e.target.closest('.tag'); if(tg){st[tg.dataset.k]=tg.dataset.v; sync(); render(); window.scrollTo(0,0); return}
-  var h=e.target.closest('.head'); if(h){var id2=h.dataset.id; open[id2]=!open[id2]; h.parentNode.classList.toggle('open',!!open[id2]); h.setAttribute('aria-expanded',!!open[id2])}
+  var h=e.target.closest('.head'); if(h){var id2=h.dataset.id; open[id2]=!open[id2]; h.closest('.card').classList.toggle('open',!!open[id2]); h.setAttribute('aria-expanded',!!open[id2])}
 });
 function sync(){
   document.querySelectorAll('.chip').forEach(function(c){var k=c.dataset.k,v=c.dataset.v; if(k==='ch')v=Number(v); c.setAttribute('aria-pressed',st[k]===v)});
