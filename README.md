@@ -1,6 +1,6 @@
 # CBT Technique Finder
 
-Quick-lookup index for *Cognitive Therapy Techniques* (Leahy, 2nd ed.). It lists technique names, chapters, book page numbers and the forms tied to each technique. It does not contain the book's text. Keep the book open alongside it.
+Quick-lookup index for *Cognitive Therapy Techniques* (Leahy, 2nd ed.). It lists technique names, chapters, book page numbers and the forms tied to each technique. It does not contain the book's text. The short prompts on each card are original wording, not taken from the book. Keep the book open alongside it.
 
 Deploy: push these files to a repo, then Settings > Pages > Deploy from branch > `main` / root.
 

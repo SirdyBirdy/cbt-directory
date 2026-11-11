@@ -35,6 +35,9 @@ h2{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--mute
 .pg{flex:none;background:var(--chip);border-radius:8px;padding:4px 8px;font-size:13px;font-variant-numeric:tabular-nums}
 .star{flex:none;border:0;background:none;font-size:24px;line-height:1;color:var(--mute);cursor:pointer;padding:6px}
 .star[aria-pressed=true]{color:var(--star)}
+.when{font-size:14px;margin-top:3px}
+.steps{margin:12px 0 4px;padding-left:22px}
+.steps li{padding:3px 0}
 .body{display:none;padding:0 14px 14px;border-top:1px solid var(--line)}
 .card.open .body{display:block}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
@@ -66,7 +69,7 @@ footer button{font:inherit;font-size:12.5px;background:none;border:1px solid var
 </main>
 <footer>
   <div style="margin-bottom:8px"><button id="exp">Export notes</button><button id="clr">Clear filters</button></div>
-  Page numbers are the book's printed pages. PDF page = book page + <span id="off"></span>. Chapter, problem and type labels are my own groupings for quick lookup. Notes stay in this browser only; keep client details out of them.
+  Page numbers are the book's printed pages. PDF page = book page + <span id="off"></span>. Chapter, problem and type labels, the "use when" lines and the prompts are my own wording from general CBT practice, not the book's text. Check them against the book before relying on them. Notes stay in this browser only; keep client details out of them.
 </footer>
 <script src="data.js"></script>
 <script>
@@ -123,7 +126,7 @@ function card(i){
   var fm=i.forms.map(function(f){return '<li><span>Form '+f+'</span><span>'+esc(forms[f].title)+'</span><span>p. '+forms[f].page+'</span></li>'}).join('');
   var tags=i.problems.map(function(p){return '<button class="tag" data-k="prob" data-v="'+esc(p)+'">'+esc(p)+'</button>'}).concat(i.types.map(function(p){return '<button class="tag" data-k="type" data-v="'+esc(p)+'">'+esc(p)+'</button>'})).join('');
   var sub=(i.kind==='technique'?'Ch '+i.ch+' · ':i.kind==='distortion'?'Distortion · ':'Ch '+i.ch+' · ')+D.chapters[i.ch]+(i.forms.length?' · '+i.forms.length+' form'+(i.forms.length>1?'s':''):'');
-  return '<div class="card'+(open[i.id]?' open':'')+'"><div style="display:flex;align-items:center"><button class="head" data-id="'+i.id+'" aria-expanded="'+!!open[i.id]+'"><div class="t"><b>'+esc(i.title)+'</b><div class="meta">'+esc(sub)+'</div></div><span class="pg">p. '+i.page+'</span></button><button class="star" data-id="'+i.id+'" aria-pressed="'+!!stars[i.id]+'" aria-label="Star">'+(stars[i.id]?'★':'☆')+'</button></div><div class="body">'+(fm?'<ul class="forms">'+fm+'</ul>':'')+'<div class="tags">'+tags+'</div><textarea data-id="'+i.id+'" placeholder="Your own notes (no client info)">'+esc(notes[i.id]||'')+'</textarea></div></div>';
+  return '<div class="card'+(open[i.id]?' open':'')+'"><div style="display:flex;align-items:center"><button class="head" data-id="'+i.id+'" aria-expanded="'+!!open[i.id]+'"><div class="t"><b>'+esc(i.title)+'</b><div class="meta">'+esc(sub)+'</div>'+(i.w?'<div class="when">'+esc(i.w)+'</div>':'')+'</div><span class="pg">p. '+i.page+'</span></button><button class="star" data-id="'+i.id+'" aria-pressed="'+!!stars[i.id]+'" aria-label="Star">'+(stars[i.id]?'★':'☆')+'</button></div><div class="body">'+(i.s&&i.s.length?'<ol class="steps">'+i.s.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ol>':'')+(fm?'<ul class="forms">'+fm+'</ul>':'')+'<div class="tags">'+tags+'</div><textarea data-id="'+i.id+'" placeholder="Your own notes (no client info)">'+esc(notes[i.id]||'')+'</textarea></div></div>';
 }
 document.addEventListener('input',function(e){if(e.target.tagName==='TEXTAREA'){var id=e.target.dataset.id;if(e.target.value.trim())notes[id]=e.target.value;else delete notes[id];store.set('cbt_notes',notes)}});
 function render(keep){
